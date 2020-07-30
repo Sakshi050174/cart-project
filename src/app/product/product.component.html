@@ -1,0 +1,84 @@
+<main>
+  <section class="left-sec">
+    <table id="table">
+      <thead>
+        <tr>
+          <td style="width: 30px"></td>
+          <td>PRODUCTS</td>
+          <td>PRICE</td>
+          <td>QUANTITY</td>
+          <td>TOTAL</td>
+        </tr>
+      </thead>
+      <tbody>
+      <tr *ngIf="!selectedItems.length" class="noData">
+        <td colspan="5"><h3>THERE ARE NO PRODUCTS</h3></td>
+      </tr>
+      <tr *ngFor="let prod of selectedItems;let i = index;">
+        <td  width="30" class="icon">
+          <i (click)="removeItem(i)" class="icon-cross fa fa-times" aria-hidden="true"></i>
+        </td>
+        <td>
+          {{prod.name}}
+        </td>
+        <td>
+          {{prod.price}}
+        </td>
+        <td>
+          <i (click)="changeQuant(prod, true, i)" class="icon-add fa fa-plus-square"></i>
+          <input type="number" (change)="changeQuant(prod, null, i)" [(ngModel)]="prod.quantity" />
+          <i (click)="changeQuant(prod, false, i)" class="icon-minus fa fa-minus-square"></i>
+        </td>
+        <td>
+          {{prod.total|currency:'EUR':true:'1.2-3'}}
+        </td>
+      </tr>
+      </tbody>
+    </table>
+    <div class="bottom-sec">
+      <div class="bill">
+        <div>
+          <label class="title">Sub Total</label>
+          <div>
+            <span style="float: left">{{subTotal|currency:'EUR':true:'1.2-3'}}</span>
+            <span>{{totalItems}} items</span>
+          </div>
+        </div>
+        <div>
+          <label class="title">VAT Tax</label>
+          <div>
+            <input type="text" pattern="[0-9]+%" name="vatPercent" (change)="inputChange($event)" [(ngModel)]="vatTax.percent" required/>
+            <span>{{vatTax.amount|currency:'EUR':true:'1.2-3'}}</span>
+          </div>
+        </div>
+        <div>
+          <label class="title">Discount</label>
+          <div>
+            <input #discountInput='ngModel'  type="text" pattern="[0-9]+%"   (change)="inputChange($event)" [(ngModel)]="discount.percent"/>
+            <span>{{discount.amount|currency:'EUR':true:'1.2-3'}}</span>
+
+          </div>
+        </div>
+        <div class="totalAmount">
+          <label class="title">Total</label>
+          <div>
+            <span>{{total|currency:'EUR':true:'1.2-3'}}</span>
+          </div>
+        </div>
+      </div>
+      <div class-="buttons">
+        <button class="cancel" (click)="cancel()"> CANCEL SALE</button>
+        <button class="submit" (click)="submit()"> PROCESS SALE</button>
+      </div>
+    </div>
+  </section>
+  <section class="right-sec">
+    <div (click)="addItem(item)" *ngFor="let item of products" style="background-image: url(../../assets/images/{{item.image}})" class="img-content">
+      <div class="{{item.category}}">
+        <label>{{item.name}}</label>
+        <label class="hoverElem">{{item.price|  currency:'EUR':true:'1.2-2'}}</label>
+        <label class="hoverElem">{{item.description}}</label>
+      </div>
+    </div>
+  </section>
+</main>

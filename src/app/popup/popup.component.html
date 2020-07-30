@@ -1,0 +1,76 @@
+<header>Receipt</header>
+<main>
+  <section>
+    <div style="text-align: center;">
+      Sale No : 11002
+    </div>
+  </section>
+  <section>
+    <div style="padding: 4px">
+      <span>Date :</span>
+      <span>{{date|date}}</span>
+    </div>
+    <table>
+      <thead>
+      <tr >
+        <td>#</td>
+        <td>Products</td>
+        <td>Quantity</td>
+        <td>Sub total</td>
+      </tr>
+      </thead>
+      <tbody  >
+      <tr *ngIf="!data.selectedItems.length" class="noData">
+        <td colspan="5"><h3>THERE ARE NO PRODUCTS</h3></td>
+      </tr>
+      <tr *ngFor="let prod of data.selectedItems;let i = index;">
+        <td>
+          {{i+1}}
+        </td>
+        <td>
+          {{prod.name}}
+        </td>
+        <td>
+          {{prod.quantity}}
+        </td>
+        <td>
+          {{prod.total|currency:'EUR':true:'1.2-3'}}
+        </td>
+      </tr>
+      <tr class="border">
+        <td colspan="2">
+          Total items
+        </td>
+        <td>
+          {{data.totalItems}} Total
+        </td>
+        <td>
+          {{data.total|currency:'EUR':true:'1.2-3'}}
+        </td>
+      </tr>
+      <tr class="border">
+        <td colspan="3">
+          Discount
+        </td>
+        <td>
+          {{data.discount.percent}}
+        </td>
+      </tr>
+      <tr class="border">
+        <td colspan="3">
+          VAT
+        </td>
+        <td>
+          {{data.vatTax.percent}}
+        </td>
+      </tr>
+      <tr>
+        <td colspan="4">
+          <button (click)="closePopup()" >Close</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </section>
+
+</main>
